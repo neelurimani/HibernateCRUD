@@ -36,6 +36,12 @@ public class App {
 
         Product readProduct = session.get(Product.class, p.getId());
         System.out.println("Product Name: " + readProduct.getName());
+        System.out.println("Product Category: " + readProduct.getCategory());
+        System.out.println("Product Quantity: " + readProduct.getQuantity());
+        System.out.println("Product Description: " + readProduct.getDescription());
+        System.out.println("Product Price: " + readProduct.getPrice());
+        System.out.println("Product SKU: " + readProduct.getSku());
+
 
         session.close();
 
@@ -43,7 +49,7 @@ public class App {
         t = session.beginTransaction();
 
         Product updateProduct = session.get(Product.class, p.getId());
-        updateProduct.setPrice(12000);
+        updateProduct.setPrice(1200);
 
         t.commit();
         session.close();

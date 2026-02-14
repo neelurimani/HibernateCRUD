@@ -8,10 +8,10 @@ import org.hibernate.cfg.Configuration;
 public class App {
 
     public static void main(String[] args) {
+        Configuration conf = new Configuration();
+        conf.configure("hibernate.cfg.xml");
 
-        SessionFactory factory = new Configuration()
-                .configure("hibernate.cfg.xml")
-                .buildSessionFactory();
+        SessionFactory factory = conf.buildSessionFactory();
 
         Session session = factory.openSession();
         Transaction t = session.beginTransaction();

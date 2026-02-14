@@ -20,6 +20,16 @@ public class Product {
     private String sku;
     @Column
     private boolean active;
+    public Product(String name, String description, String category, int quantity, double price, String sku, boolean active) {
+        this.name = name;
+        this.description = description;
+        this.category = category;
+        this.quantity = quantity;
+        this.price = price;
+        this.sku = sku;
+        this.active = active;
+
+    }
 
     public Product() {
     }

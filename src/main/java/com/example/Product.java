@@ -6,18 +6,20 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
+    @Column(nullable = false, length = 100)
     private String name;
+    @Column(nullable = false, unique = true, length = 50)
+    private String sku;
+    @Column(nullable = false)
+    private double price;
+
+    @Column(nullable = false)
+    private int quantity;
+
     @Column
     private String description;
     @Column
     private String category;
-    @Column
-    private int quantity;
-    @Column
-    private double price;
-    @Column(nullable = false, unique = true)
-    private String sku;
     @Column
     private boolean active;
     public Product(String name, String description, String category, int quantity, double price, String sku, boolean active) {

@@ -5,57 +5,76 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
+import java.util.Scanner;
+
 public class App {
 
     public static void main(String[] args) {
+
         Configuration conf = new Configuration();
         conf.configure("hibernate.cfg.xml");
 
         SessionFactory factory = conf.buildSessionFactory();
-
+        Scanner sc = new Scanner(System.in);
         Session session = factory.openSession();
         Transaction t = session.beginTransaction();
 
         Product p = new Product();
-        p.setName("Pizza");
-        p.setCategory("Food");
-        p.setQuantity(1);
-        p.setDescription("Cheese Pizza");
+
+        System.out.print("Enter Name: ");
+        p.setName(sc.next());
+
+        System.out.print("Enter Category: ");
+        p.setCategory(sc.next());
+
+        System.out.print("Enter Quantity: ");
+        p.setQuantity(sc.nextInt());
+
+        System.out.print("Enter Description: ");
+        sc.nextLine();
+        p.setDescription(sc.nextLine());
+
+        System.out.print("Enter Price: ");
+        p.setPrice(sc.nextDouble());
+
+        System.out.print("Enter SKU: ");
+        p.setSku(sc.next());
+
         p.setActive(true);
-        p.setPrice(10000);
-        p.setSku("p1");
 
         session.save(p);
-
         t.commit();
         session.close();
 
-        System.out.println("Product Created");
+        System.out.println("Product Created with ID: " + p.getId());
 
         session = factory.openSession();
 
         Product readProduct = session.get(Product.class, p.getId());
-        System.out.println("Product Name: " + readProduct.getName());
-        System.out.println("Product Category: " + readProduct.getCategory());
-        System.out.println("Product Quantity: " + readProduct.getQuantity());
-        System.out.println("Product Description: " + readProduct.getDescription());
-        System.out.println("Product Price: " + readProduct.getPrice());
-        System.out.println("Product SKU: " + readProduct.getSku());
-
+        System.out.println("\n--- Product Details ---");
+        System.out.println("Name: " + readProduct.getName());
+        System.out.println("Category: " + readProduct.getCategory());
+        System.out.println("Quantity: " + readProduct.getQuantity());
+        System.out.println("Description: " + readProduct.getDescription());
+        System.out.println("Price: " + readProduct.getPrice());
+        System.out.println("SKU: " + readProduct.getSku());
 
         session.close();
 
+        // ================= UPDATE =================
         session = factory.openSession();
         t = session.beginTransaction();
 
         Product updateProduct = session.get(Product.class, p.getId());
-        updateProduct.setPrice(1200);
+
+        System.out.print("\nEnter New Price: ");
+        double newPrice = sc.nextDouble();
+        updateProduct.setPrice(newPrice);
 
         t.commit();
         session.close();
 
         System.out.println("Product Updated");
-
         session = factory.openSession();
         t = session.beginTransaction();
 
@@ -68,5 +87,6 @@ public class App {
         System.out.println("Product Deleted");
 
         factory.close();
+        sc.close();
     }
 }
